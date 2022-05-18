@@ -4,6 +4,17 @@ $sql = 'SELECT * FROM records ORDER by id DESC';
 $statement = $connection->prepare($sql);
 $statement->execute();
 $recs = $statement->fetchAll(PDO::FETCH_OBJ);
+
+$sql2 = 'SELECT * FROM cp ORDER by id DESC';
+$statement2 = $connection->prepare($sql2);
+$statement2->execute();
+$rows = $statement2->fetchAll(PDO::FETCH_OBJ);
+
+$sql3 = 'SELECT * FROM location ORDER by id DESC';
+$statement3 = $connection->prepare($sql3);
+$statement3->execute();
+$rows2 = $statement3->fetchAll(PDO::FETCH_OBJ);
+
  ?>
  
  <!DOCTYPE html>
@@ -291,7 +302,7 @@ $(document).ready(function(){
 				<thead>
 					<tr>
 						<th>Date</th>
-						<th>CP name</th>
+						<th>Reg.no</th>
 						<th>Location</th>
 						<th>item borrowed</th>
 						<th>Time in</th>
@@ -310,14 +321,23 @@ $(document).ready(function(){
 				</div>
 				<div class="modal-body">					
 					<div class="form-group">
-						<label>Cp name</label>
-						<!-- here!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! -->
-						<input type="text" name="cpname" class="form-control" required>
+						<label>Reg.no</label>
+
+						<select id="regno" name="regno">
+						<?php foreach($rows as $row): ?>
+						<option value="<?= $row->reg_no; ?>"><?= $row->reg_no; ?></option>
+						<?php endforeach; ?>
+						</select>
 					</div>
 					<div class="form-group">
 						<label>Location</label>
-						<!-- and here!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! -->
-						<input type="text" name="location" class="form-control" required>
+						
+						<select id="location" name="location">
+						<?php foreach($rows2 as $row2): ?>
+						<option value="<?= $row2->loc; ?>"><?= $row2->loc; ?></option>
+						<?php endforeach; ?>
+						</select>
+						
 					</div>
 					<div class="form-group">
 						<label>Item borrowed</label>

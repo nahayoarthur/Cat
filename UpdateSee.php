@@ -3,14 +3,28 @@ $id = $_GET['id'];
 $sql = 'SELECT * FROM records WHERE id=:id';
 $statement = $connection->prepare($sql);
 $statement->execute([':id' => $id ]);
-$user = $statement->fetch(PDO::FETCH_OBJ);
+$edits = $statement->fetch(PDO::FETCH_OBJ);
+
+$sql2 = 'SELECT * FROM cp ORDER by id DESC';
+$statement2 = $connection->prepare($sql2);
+$statement2->execute();
+$rows = $statement2->fetchAll(PDO::FETCH_OBJ);
+
+$sql3 = 'SELECT * FROM location ORDER by id DESC';
+$statement3 = $connection->prepare($sql3);
+$statement3->execute();
+$rows2 = $statement3->fetchAll(PDO::FETCH_OBJ);
+
+
 if (isset ($_POST['btnmk']) ) {
-  $cpname = $_POST['name'];
-  $pwd = $_POST['pwd'];
-  $phone = $_POST['phone'];
-  $sql = 'UPDATE user SET username=:username, password=:password, phone_no=:phone_no WHERE id=:id';
+  $regno = $_POST['regno'];
+  $loc = $_POST['location'];
+  $item=$_POST['item'];
+  $tin = $_POST['tin'];
+  $tout = $_POST['tout'];
+  $sql = 'UPDATE records SET cp=:regno, loc=:loc, item=:item, time_in=:tin, time_out=:tout WHERE id=:id';
   $statement = $connection->prepare($sql);
-  if ($statement->execute([':username' => $name, ':password' => $pwd, ':phone_no' => $phone, ':id' => $id])) {
+  if ($statement->execute([':regno' => $regno, ':loc' => $loc, ':item' => $item, ':tin'=>$tin, ':tout'=>$tout, ':id' => $id])) {
     header("Location: records.php");
   }
 
@@ -23,7 +37,7 @@ if (isset ($_POST['btnmk']) ) {
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-<title>Records</title>
+<title>Update this record</title>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto|Varela+Round">
 <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css">
 <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
@@ -289,43 +303,42 @@ $(document).ready(function(){
 			<form method="post">
 				<div class="modal-header">						
 					<h4 class="modal-title">Edit record</h4>
-					<a href="book.jsp"><button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button></a>
+					<a href="records.php"><button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button></a>
 				</div>
 				<div class="modal-body">									
 					<div class="form-group">
-						<label>Lab</label>
-						<input type="text" class="form-control" name="lab" value="!!!!!!" required>
+					<label>Reg.no</label>
+
+							<select id="regno" name="regno">
+							<?php foreach($rows as $row): ?>
+							<option value="<?= $row->reg_no; ?>"><?= $row->reg_no; ?></option>
+							<?php endforeach; ?>
+							</select>
 					</div>
 					<div class="form-group">
-						<label>Class</label>
-						<input type="text" class="form-control" name="class" value="" required>
+						<label>Location</label>
+						<select id="location" name="location">
+						<?php foreach($rows2 as $row2): ?>
+						<option value="<?= $row2->loc; ?>"><?= $row2->loc; ?></option>
+						<?php endforeach; ?>
+						</select>
 					</div>
 					<div class="form-group">
-						<label>Cp Name</label>
-						<input type="text" class="form-control" name="cp" value="" required>
+						<label>Item borrowed</label>
+						<input type="text" class="form-control" name="item" value="<?=$edits->item?>" required>
 					</div>
-					<div class="form-group">
-						<label>Phone</label>
-						<input type="text" class="form-control" name="phone" value="" required>
-					</div>	
-					
-					<div class="form-group">
-						<label>Borrowed item</label>
-						<input type="text" class="form-control" name="Bitem" value="" required>
-					</div>	
-						
 					<div class="form-group">
 						<label>Time in</label>
-						<input type="text" class="form-control" name="Tin" value="" required>
-					</div>
+						<input type="text" class="form-control" name="tin" value="<?=$edits->time_in?>" required>
+					</div>	
 					
 					<div class="form-group">
 						<label>Time out</label>
-						<input type="text" class="form-control" name="Tout" value="" required>
-					</div>				
+						<input type="text" class="form-control" name="tout" value="<?=$edits->time_out?>" required>
+					</div>	
+										
 				</div>
 								<div class="modal-footer">
-					<input type="button" class="btn btn-default" data-dismiss="modal" value="Cancel">
 					<input type="submit" name="btnmk" class="btn btn-info" value="Save">
 				</div>
 				<!-- end the loop -->
