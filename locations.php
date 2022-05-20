@@ -334,6 +334,5 @@ $(document).ready(function(){
 			</table>		
 	</div>        
 </div>
-
 </body>
 </html>
