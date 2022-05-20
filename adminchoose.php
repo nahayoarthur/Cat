@@ -1,6 +1,12 @@
+<?php
+session_start();
+if(!isset($_SESSION['username']))
+{
+	header("location:index.php");
+}else{
+	?>
 <!DOCTYPE html>
 <html>
-
 <head>
   	<title>Admin choose</title>
     <meta charset="utf-8">
@@ -56,3 +62,4 @@
 
 
 </html>
+<?php }?>

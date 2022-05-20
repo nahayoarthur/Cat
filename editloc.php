@@ -1,4 +1,10 @@
-<?php require 'db.php';
+<?php
+session_start();
+if(!isset($_SESSION['username']))
+{
+	header("location:index.php");
+}else{
+require 'db.php';
 $id = $_GET['id'];
 $sql = 'SELECT * FROM location WHERE id=:id';
 $statement = $connection->prepare($sql);
@@ -301,3 +307,4 @@ $(document).ready(function(){
 	</div>
 </body>
 </html>
+<?php }?>

@@ -1,11 +1,15 @@
 <?php
+session_start();
+if(!isset($_SESSION['username']))
+{
+	header("location:index.php");
+}else{
 require 'db.php';
 $sql = 'SELECT * FROM location';
 $statement = $connection->prepare($sql);
 $statement->execute();
 $locs = $statement->fetchAll(PDO::FETCH_OBJ);
  ?>
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -336,3 +340,4 @@ $(document).ready(function(){
 </div>
 </body>
 </html>
+<?php }?>

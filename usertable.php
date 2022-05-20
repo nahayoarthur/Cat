@@ -1,4 +1,9 @@
 <?php
+session_start();
+if(!isset($_SESSION['username']))
+{
+	header("location:index.php");
+}else{
 require 'db.php';
 $sql = 'SELECT * FROM user';
 $statement = $connection->prepare($sql);
@@ -350,3 +355,4 @@ $(document).ready(function(){
 
 </body>
 </html>
+<?php }?>

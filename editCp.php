@@ -1,4 +1,10 @@
-<?php require 'db.php';
+<?php
+session_start();
+if(!isset($_SESSION['username']))
+{
+	header("location:index.php");
+}else{
+require 'db.php';
 $id = $_GET['id'];
 $sql = 'SELECT * FROM cp WHERE id=:id';
 $statement = $connection->prepare($sql);
@@ -14,7 +20,6 @@ if (isset ($_POST['btnmk']) ) {
   if ($statement->execute([':name' => $name, ':regno' => $regno, ':class' => $class, ':phone' => $phone, ':id' => $id])) {
     header("Location: cps.php");
   }
-
 }
 ?>
 <!DOCTYPE html>
@@ -316,3 +321,4 @@ $(document).ready(function(){
 	</div>
 </body>
 </html>
+<?php }?>
