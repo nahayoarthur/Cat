@@ -1,18 +1,15 @@
 <?php
-
-use LDAP\Result;
-
 require 'db.php';
 $name=$_POST['name'];
 $pwd=$_POST['pass'];
 
-// $_SESSION['username']=$name;
-// if(!isset($_SESSION['username']))
-// {
-// 	header("location:index.php");
-// }
-
-
+$_SESSION['username']=$name;
+if(!isset($_SESSION['username']))
+{
+	header("location:index.php");
+}
+session_start();
+$_SESSION['username']=$name;
     
     try
     {
