@@ -1,5 +1,6 @@
 <?php
 require 'db.php';
+
 $sql = 'SELECT * FROM records ORDER by id DESC';
 $statement = $connection->prepare($sql);
 $statement->execute();

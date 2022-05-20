@@ -6,7 +6,13 @@ require 'db.php';
 $name=$_POST['name'];
 $pwd=$_POST['pass'];
 
-$_SESSION['username']=$name;
+// $_SESSION['username']=$name;
+// if(!isset($_SESSION['username']))
+// {
+// 	header("location:index.php");
+// }
+
+
     
     try
     {
