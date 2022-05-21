@@ -1,4 +1,10 @@
 <?php
+session_start();
+if(!isset($_SESSION['username']))
+{
+	header("location:index.php");
+}else{
+
 require 'db.php';
 $sql = 'SELECT * FROM records ORDER by id DESC';
 $statement = $connection->prepare($sql);
@@ -292,7 +298,7 @@ $(document).ready(function(){
 						<h2>Manage <b>records</b></h2>
 					</div>
 					<div class="col-sm-6">
-						<a href="Index.jsp" class="btn btn-danger" ><i class="material-icons">&#xE15C;</i> <span>Log out</span></a>	
+						<a href="logout.php" class="btn btn-danger" ><i class="material-icons">&#xE15C;</i> <span>Log out</span></a>	
 						<a href="managerlogin.php" class="btn btn-info"><span>Manager Options</span></a>
 						<a href="#addModal" class="btn btn-info" data-toggle="modal"><span>Add New record</span></a>			
 					</div>
@@ -387,3 +393,5 @@ $(document).ready(function(){
 <!-- end the loading -->
 
 </html>
+
+<?php } ?>

@@ -1,11 +1,9 @@
 <?php
-
-use LDAP\Result;
-
 require 'db.php';
 $name=$_POST['name'];
 $pwd=$_POST['pass'];
 
+session_start();
 $_SESSION['username']=$name;
     
     try
